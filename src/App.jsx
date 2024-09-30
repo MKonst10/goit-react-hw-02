@@ -8,19 +8,22 @@ import Notification from "./components/Notification/Notification";
 function App() {
   const [review, setReview] = useState(() => {
     const savedData = window.localStorage.getItem("review");
+    console.log(savedData);
     if (savedData !== null) {
       return JSON.parse(savedData);
     }
     return { good: 0, neutral: 0, bad: 0 };
   });
   useEffect(() => {
-    window.localStorage.setItem("reviews", JSON.stringify({ review }));
+    window.localStorage.setItem("review", JSON.stringify(review));
   }, [review]);
 
   const totalFeedback = review.good + review.neutral + review.bad;
   const positiveFeedback = Math.round((review.good / totalFeedback) * 100);
   const updateFeedback = (feedbackType) => {
-    setReview({ ...review, [feedbackType]: review[feedbackType] + 1 });
+    setReview((prevReview) => {
+      return { ...prevReview, [feedbackType]: prevReview[feedbackType] + 1 };
+    });
   };
   const resetFeedback = () => {
     setReview({ good: 0, neutral: 0, bad: 0 });
