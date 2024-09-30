@@ -9,7 +9,7 @@ function App() {
   const [review, setReview] = useState(() => {
     const savedData = window.localStorage.getItem("review");
     if (savedData !== null) {
-      JSON.parse(savedData);
+      return JSON.parse(savedData);
     }
     return { good: 0, neutral: 0, bad: 0 };
   });
